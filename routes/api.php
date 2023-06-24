@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\LinkController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -14,6 +15,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+/**
+ * API Domains
+ */
+Route::domain('api.' . config('app.domain'))
+    ->middleware(['auth:sanctum'])
+    ->group(function () {
+        Route::apiResource('links', LinkController::class);
+    });

@@ -26,7 +26,7 @@ class LinkUpdateRequest extends FormRequest
 
     public function prepareForValidation(): void
     {
-        $this->removeEmpty( 'label', 'slug', 'full_link' );
+        $this->removeEmpty('label', 'slug', 'full_link');
         $this->prefixFullLinkProtocol();
     }
 
@@ -39,35 +39,34 @@ class LinkUpdateRequest extends FormRequest
     {
 
         return [
-            'label'       => [ 'sometimes', 'required', 'string', 'max:256' ],
-            'full_link'   => [ 'sometimes', 'required', 'url', 'max:256' ],
+            'label'       => ['sometimes', 'required', 'string', 'max:256'],
+            'full_link'   => ['sometimes', 'required', 'url', 'max:256'],
             'slug'        => [
                 'sometimes',
                 'alpha_dash',
-                Rule::unique( 'links' )->ignore( $this->link )
+                Rule::unique('links')->ignore($this->link)
             ],
-            'description' => [ 'nullable', 'string' ],
-            'private'     => [ 'sometimes', 'boolean' ],
+            'description' => ['nullable', 'string'],
+            'private'     => ['sometimes', 'boolean'],
         ];
     }
 
     public function validated()
     {
         $validated = parent::validated();
-        if ( isset( $validated['private'] ) ) {
-            $validated['secret'] = ! empty( $validated['private'] ) && $validated['private'] ? Str::random( 6 ) : null;
-            unset( $validated['private'] );
+        if (isset($validated['private'])) {
+            $validated['secret'] = !empty($validated['private']) && $validated['private'] ? Str::random(6) : null;
+            unset($validated['private']);
         }
 
-        return collect( $validated )
-            ->filter( function ( $value, $key ) {
-                if ( in_array( $key, [ 'description', 'secret' ] ) ) {
+        return collect($validated)
+            ->filter(function ($value, $key) {
+                if (in_array($key, ['description', 'secret'])) {
                     return true;
                 }
 
                 return (bool) $value;
-            } )
+            })
             ->toArray();
     }
-
 }

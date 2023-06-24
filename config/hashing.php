@@ -49,4 +49,16 @@ return [
         'time' => 2,
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Encyrpt Options
+    |--------------------------------------------------------------------------
+    |
+    | Encrypt key for Allstars helpers
+    |
+    */
+
+    'secret_key' => env('SECRET_KEY', 'm120L!b#HXwM'),
+    'secret_hash' => env('SECRET_HASH', '21p0becja0pkjce31x7p2c0o7818l22b')
+
 ];

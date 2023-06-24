@@ -18,22 +18,18 @@ use Illuminate\Support\Facades\Route;
 /**
  * Sub-domains
  */
-Route::domain( 'dash.' . config( 'app.domain' ) )
-     ->middleware( [ 'auth', 'verified' ] )
-     ->group( function () {
-         Route::get( '/', [ LinkController::class, 'index' ] )->name( 'dashboard' );
-
-         Route::resource( 'links', LinkController::class )
-              ->except( [ 'index' ] );
-     } );
+Route::domain('dash.' . config('app.domain'))
+    ->middleware(['auth', 'verified'])
+    ->group(function () {
+        Route::get('/', [LinkController::class, 'index'])->name('dashboard');
+        Route::resource('links', LinkController::class)
+            ->except(['index']);
+    });
 
 /**
  * Main Domains
  */
-Route::domain( config( 'app.domain' ) )->group( function () {
-    Route::get( '/', [ HomeController::class, 'index' ] )->name( 'home' );
-
-    Route::get( '{link:slug}/{secret?}', [ HomeController::class, 'link' ] )->name( 'shortlink' );
-
-} );
-
+Route::domain(config('app.domain'))->group(function () {
+    Route::get('/', [HomeController::class, 'index'])->name('home');
+    Route::get('{link:slug}/{secret?}', [HomeController::class, 'link'])->name('shortlink');
+});

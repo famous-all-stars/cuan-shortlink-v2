@@ -1,12 +1,11 @@
 # HRR.im - Personalized Shortlink Generator
-![Build](https://github.com/HarunRRayhan/hrr.im/workflows/Build/badge.svg)
 [![Packagist License](https://img.shields.io/github/license/HarunRRayhan/hrr.im)](http://choosealicense.com/licenses/mit/)
 
 It's simple yet powerful shortlink generator using the Laravel Framework. It's saves statistics of each link clicks too. See [SCREENSHOTS](#screenshots) for UI design
 ## Installation
 Clone this app into your directory using git:
 ```bash
-$ git clone https://github.com/HarunRRayhan/hrr.im.git your-directory
+$ git clone git@github.com:famous-all-stars/shortlink-v2.git your-directory
 ```
 
 Now, go to your directory:
@@ -38,7 +37,7 @@ $ php artisan migrate --seed
 Now use `me@hrr.im` in email and `password` in password to login.
 
 ## Development
-Do you want to develop your app from this? Install all NPM packages first:
+Do you want to develop your app from this? Install all NPM packages first (version lts/fermium):
 ```bash
 $ npm install
 ```

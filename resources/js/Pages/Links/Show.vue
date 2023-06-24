@@ -56,6 +56,7 @@
             </div>
             <div class="md:flex-1 mt-4 md:mt-0 bg-white rounded shadow overflow-hidden">
                 <link-prevue
+                    :apiUrl="`https://shortlink.alstr.in/preview/`"
                     :url="link.full_link"
                     cardWidth="100%"
                     :showButton="false"

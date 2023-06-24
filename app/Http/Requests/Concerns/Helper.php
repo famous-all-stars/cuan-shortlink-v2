@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @author HarunRRayhan/HRXPlugins
  * @url http://hrxplugins.com/
@@ -19,18 +20,18 @@ use Illuminate\Support\Str;
 trait Helper
 {
 
-    protected function removeEmpty( ...$items ): LinkUpdateRequest
+    protected function removeEmpty(...$items): LinkUpdateRequest
     {
-        if ( ! $items ) {
+        if (!$items) {
             return $this;
         }
 
-        foreach ( $items as $item ) {
+        foreach ($items as $item) {
             if (
-                $this->has( $item ) &&
-                ! $this->get( $item )
+                $this->has($item) &&
+                !$this->get($item)
             ) {
-                $this->request->remove( $item );
+                $this->request->remove($item);
             }
         }
 
@@ -40,15 +41,25 @@ trait Helper
     protected function prefixFullLinkProtocol(): self
     {
         if (
-            $this->filled( 'full_link' ) &&
-            ! Str::startsWith( $url = $this->get( 'full_link' ), [
+            $this->filled('full_link') &&
+            !Str::startsWith($url = $this->get('full_link'), [
                 'http://',
                 'https://'
-            ] )
+            ])
         ) {
-            $this->merge( [ 'full_link' => "http://$url" ] );
+            $this->merge(['full_link' => "http://$url"]);
         }
 
         return $this;
+    }
+
+    protected function responseError($message, $statusCode = 403)
+    {
+        return response()->json(['success' => false, 'message' => $message], $statusCode);
+    }
+
+    protected function responseSuccess($data = null, $message = '', $statusCode = 403)
+    {
+        return response()->json(['success' => true, 'message' => $message, 'data' => $data], $statusCode);
     }
 }

@@ -193,6 +193,7 @@ return [
 
     'aliases'       => [
         'Route' => Illuminate\Support\Facades\Route::class,
+        'Allstars' => App\Helpers\Allstars::class
     ],
 
     /*
@@ -203,7 +204,7 @@ return [
     | Set Redirect URL for the homepage
     |
     */
-    'home_redirect' => env( 'HOME_REDIRECT_URL', 'https://harun.dev' ),
+    'home_redirect' => env( 'HOME_REDIRECT_URL', 'localhost:8000' ),
 
     /*
     |--------------------------------------------------------------------------

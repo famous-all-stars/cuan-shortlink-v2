@@ -22,14 +22,14 @@ class LinkController extends Controller
      *
      * @return \Inertia\Response
      */
-    public function index( Request $request ): Response
+    public function index(Request $request): Response
     {
-        $links = ( $search = $request->search ) ? Link::search( $search )->paginate() : Link::latest()->paginate();
+        $links = ($search = $request->search) ? Link::search($search)->paginate() : Link::latest()->paginate();
 
-        return Inertia::render( 'Links/Index', [
-            'filters' => $request->all( 'search' ),
+        return Inertia::render('Links/Index', [
+            'filters' => $request->all('search'),
             'links'   => $links
-        ] );
+        ]);
     }
 
     /**
@@ -39,9 +39,9 @@ class LinkController extends Controller
      */
     public function create(): Response
     {
-        return Inertia::render( 'Links/Create', [
-            'app_url' => config( 'app.domain' )
-        ] );
+        return Inertia::render('Links/Create', [
+            'app_url' => config('app.domain')
+        ]);
     }
 
     /**
@@ -51,11 +51,11 @@ class LinkController extends Controller
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store( LinkStoreRequest $request )
+    public function store(LinkStoreRequest $request)
     {
-        Link::create( $request->validated() );
+        Link::create($request->validated());
 
-        return Redirect::route( 'dashboard' )->with( 'success', 'Link Created Successfully!' );
+        return Redirect::route('dashboard')->with('success', 'Link Created Successfully!');
     }
 
     /**
@@ -65,18 +65,18 @@ class LinkController extends Controller
      *
      * @return Response
      */
-    public function show( Link $link ): Response
+    public function show(Link $link): Response
     {
-        $link->loadCount( 'statistics' );
+        $link->loadCount('statistics');
 
-        return Inertia::render( 'Links/Show', [
+        return Inertia::render('Links/Show', [
             'link'       => $link,
             'statistics' => $link
                 ->statistics()
-                ->latest( 'opened_at' )
-                ->paginate( 25 )
-                ->transform( fn( LinkStatistic $statistics ) => app( ViewLinkStatistics::class )->get( $statistics ) )
-        ] );
+                ->latest('opened_at')
+                ->paginate(25)
+                ->transform(fn (LinkStatistic $statistics) => app(ViewLinkStatistics::class)->get($statistics))
+        ]);
     }
 
     /**
@@ -86,12 +86,12 @@ class LinkController extends Controller
      *
      * @return Response
      */
-    public function edit( Link $link ): Response
+    public function edit(Link $link): Response
     {
-        return Inertia::render( 'Links/Edit', [
-            'app_url' => config( 'app.domain' ),
+        return Inertia::render('Links/Edit', [
+            'app_url' => config('app.domain'),
             'link'    => $link
-        ] );
+        ]);
     }
 
     /**
@@ -102,11 +102,11 @@ class LinkController extends Controller
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update( LinkUpdateRequest $request, Link $link )
+    public function update(LinkUpdateRequest $request, Link $link)
     {
-        $link->update( $request->validated() );
+        $link->update($request->validated());
 
-        return Redirect::route( 'dashboard' )->with( 'success', 'Link Updated Successfully!' );
+        return Redirect::route('dashboard')->with('success', 'Link Updated Successfully!');
     }
 
     /**
@@ -116,11 +116,11 @@ class LinkController extends Controller
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy( Link $link )
+    public function destroy(Link $link)
     {
         $link->delete();
 
-        return Redirect::route( 'dashboard' )
-                       ->with( 'success', 'Link deleted.' );
+        return Redirect::route('dashboard')
+            ->with('success', 'Link deleted.');
     }
 }

@@ -33,22 +33,22 @@ class LinkStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'label'       => [ 'required', 'string', 'max:256' ],
-            'full_link'   => [ 'required', 'url', 'max:256' ],
-            'slug'        => [ 'nullable', 'alpha_dash', 'unique:links' ],
-            'description' => [ 'nullable', 'string' ],
-            'private'     => [ 'sometimes', 'boolean' ],
+            'label'       => ['required', 'string', 'max:256'],
+            'full_link'   => ['required', 'url', 'max:256'],
+            'slug'        => ['nullable', 'alpha_dash', 'unique:links'],
+            'description' => ['nullable', 'string'],
+            'private'     => ['sometimes', 'boolean'],
         ];
     }
 
     public function validated(): array
     {
         $validated = parent::validated();
-        if ( ! empty( $validated['private'] ) && $validated['private'] ) {
-            $validated['secret'] = Str::random( 6 );
-            unset( $validated['private'] );
+        if (!empty($validated['private']) && $validated['private']) {
+            $validated['secret'] = Str::random(6);
+            unset($validated['private']);
         }
 
-        return collect( $validated )->filter()->toArray();
+        return collect($validated)->filter()->toArray();
     }
 }

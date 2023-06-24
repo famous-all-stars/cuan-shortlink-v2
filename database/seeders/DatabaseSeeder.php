@@ -15,13 +15,13 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // \App\Models\User::factory(10)->create();
-        User::factory()->create( [
+        User::factory()->create([
             'name'  => 'Harun R Rayhan',
             'email' => 'me@hrr.im',
-        ] );
+        ]);
 
-        $this->call( [
-            LinkSeeder::class,
-        ] );
+        $this->call([
+            // LinkSeeder::class,
+        ]);
     }
 }

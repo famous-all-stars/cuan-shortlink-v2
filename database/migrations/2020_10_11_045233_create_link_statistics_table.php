@@ -18,7 +18,7 @@ class CreateLinkStatisticsTable extends Migration
             $table->foreignId('link_id')->constrained()->cascadeOnDelete();
             $table->string('referer')->nullable();
             $table->string('slug')->nullable();
-            $table->string('to');
+            $table->string('to', 550);
             $table->text('user_agent')->nullable();
             $table->string('ip_address', 45)->nullable();
             $table->boolean('success')->default(true);

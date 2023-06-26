@@ -13,15 +13,15 @@ class CreateLinksTable extends Migration
      */
     public function up()
     {
-        Schema::create( 'links', function ( Blueprint $table ) {
+        Schema::create('links', function (Blueprint $table) {
             $table->id();
-            $table->string( 'label' )->nullable()->index();
-            $table->string( 'slug' )->collation('utf8_bin')->index()->unique();
-            $table->string( 'full_link' )->index();
-            $table->string( 'secret' )->nullable();
-            $table->text( 'description' )->nullable();
+            $table->string('label')->nullable()->index();
+            $table->string('slug')->collation('utf8_bin')->index()->unique();
+            $table->string('full_link', 550)->index();
+            $table->string('secret')->nullable();
+            $table->text('description')->nullable();
             $table->timestamps();
-        } );
+        });
     }
 
     /**
@@ -31,6 +31,6 @@ class CreateLinksTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists( 'links' );
+        Schema::dropIfExists('links');
     }
 }

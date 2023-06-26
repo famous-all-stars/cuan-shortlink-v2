@@ -13,10 +13,10 @@ class CreateBijectivesTable extends Migration
      */
     public function up()
     {
-        Schema::create( 'bijectives', function ( Blueprint $table ) {
+        Schema::create('bijectives', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger( 'index' )->default( 0 );
-        } );
+            $table->unsignedBigInteger('index')->default(0);
+        });
     }
 
     /**
@@ -26,6 +26,6 @@ class CreateBijectivesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists( 'bijectives' );
+        Schema::dropIfExists('bijectives');
     }
 }

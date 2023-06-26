@@ -1,25 +1,30 @@
 <?php
 
+namespace App\Http\Resources;
 
-namespace App\Actions\Statistics;
-
-
+use App\Actions\Statistics\ViewLinkStatistics;
 use App\Models\LinkStatistic;
-use Illuminate\Support\Str;
+use Illuminate\Http\Resources\Json\JsonResource;
 use Jenssegers\Agent\Agent;
+use Illuminate\Support\Str;
 
-class ViewLinkStatistics
+class Statistic extends JsonResource
 {
-    public function get(LinkStatistic $statistic)
+    /**
+     * Transform the resource into an array.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return array
+     */
+    public function toArray($request)
     {
-        $agent = $this->createAgent($statistic);
-
+        $agent = $this->createAgent($this->resource);
         return [
-            'referer'    => $statistic->referer,
-            'shortlink'  => Str::finish(config('app.url'), '/') . $statistic->slug,
-            'to'         => $statistic->to,
-            'ip_address' => $statistic->ip_address,
-            'success'    => $statistic->success,
+            'referer'    => $this->referer,
+            'shortlink'  => Str::finish(config('app.url'), '/') . $this->slug,
+            'to'         => $this->to,
+            'ip_address' => $this->ip_address,
+            'success'    => $this->success,
             'agent'      => [
                 'platform' => [
                     'name'    => $agent->platform(),

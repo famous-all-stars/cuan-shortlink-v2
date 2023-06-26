@@ -21,5 +21,6 @@ use Illuminate\Support\Facades\Route;
 Route::domain('api.' . config('app.domain'))
     ->middleware(['auth:sanctum'])
     ->group(function () {
+        // Route::get('links/{id}/statistics', [LinkController::class, 'statistics']);
         Route::apiResource('links', LinkController::class);
     });

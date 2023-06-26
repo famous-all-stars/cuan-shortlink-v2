@@ -2,7 +2,9 @@
 
 namespace App\Http\Resources;
 
+use App\Actions\Statistics\ViewLinkStatistics;
 use App\Helpers\Allstars;
+use App\Models\LinkStatistic;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class Link extends JsonResource
@@ -22,7 +24,9 @@ class Link extends JsonResource
             'full_link' => $this->full_link,
             'secret' => Allstars::encrypt($this->secret),
             'description' => $this->description,
-            'shortlink' => $this->shortlink
+            'shortlink' => $this->shortlink,
+            'clicks' => $this->statistics_count,
+            'statistics' => $this->whenLoaded('statistics', new StatisticCollection($this->statistics), [])
         ];
     }
 }

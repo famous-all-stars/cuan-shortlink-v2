@@ -9,17 +9,17 @@ class StoreLinkStatistic
 {
     protected bool $success = true;
 
-    public function save( Request $request, Link $link )
+    public function save(Request $request, Link $link)
     {
-        return $link->statistics()->create( [
-            'referer'    => $request->headers->get( 'referer' ),
-            'slug'       => $this->getSlug( $link->slug, $request->route()->parameter( 'secret' ) ),
+        return $link->statistics()->create([
+            'referer'    => $request->headers->get('referer'),
+            'slug'       => $this->getSlug($link->slug, $request->route()->parameter('secret')),
             'to'         => $link->full_link,
             'user_agent' => $request->userAgent(),
             'ip_address' => $request->ip(),
             'opened_at'  => now(),
             'success'    => $this->success,
-        ] );
+        ]);
     }
 
     public function failed()
@@ -29,8 +29,8 @@ class StoreLinkStatistic
         return $this;
     }
 
-    protected function getSlug( string $slug, ?string $secret )
+    protected function getSlug(string $slug, ?string $secret)
     {
-        return $slug . ( $secret ? '/' . $secret : '' );
+        return $slug . ($secret ? '/' . $secret : '');
     }
 }

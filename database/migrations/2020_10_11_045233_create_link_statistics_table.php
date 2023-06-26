@@ -13,17 +13,17 @@ class CreateLinkStatisticsTable extends Migration
      */
     public function up()
     {
-        Schema::create( 'link_statistics', function ( Blueprint $table ) {
+        Schema::create('link_statistics', function (Blueprint $table) {
             $table->id();
-            $table->foreignId( 'link_id' )->constrained()->cascadeOnDelete();
-            $table->string( 'referer' )->nullable();
-            $table->string( 'slug' )->nullable();
-            $table->string( 'to' );
-            $table->text( 'user_agent' )->nullable();
-            $table->string( 'ip_address', 45 )->nullable();
-            $table->boolean( 'success' )->default( true );
-            $table->timestamp( 'opened_at' );
-        } );
+            $table->foreignId('link_id')->constrained()->cascadeOnDelete();
+            $table->string('referer')->nullable();
+            $table->string('slug')->nullable();
+            $table->string('to');
+            $table->text('user_agent')->nullable();
+            $table->string('ip_address', 45)->nullable();
+            $table->boolean('success')->default(true);
+            $table->timestamp('opened_at');
+        });
     }
 
     /**
@@ -33,6 +33,6 @@ class CreateLinkStatisticsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists( 'link_statistics' );
+        Schema::dropIfExists('link_statistics');
     }
 }

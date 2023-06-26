@@ -10,6 +10,7 @@ use App\Http\Resources\Link as ResourcesLink;
 use App\Http\Resources\LinkCollection;
 use App\Models\Link;
 use App\Models\LinkStatistic;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Validator;
@@ -64,6 +65,7 @@ class LinkController extends Controller
         } catch (\Throwable $th) {
             return $this->responseError('Link not found', Response::HTTP_FORBIDDEN);
         }
+        $link->loadCount('statistics');
         return $this->responseSuccess(new ResourcesLink($link), 'OK', Response::HTTP_OK);
     }
 
@@ -101,10 +103,26 @@ class LinkController extends Controller
         }
         try {
             $link = Link::findOrFail((int)$id);
-        } catch (\Throwable $th) {
+        } catch (Exception $th) {
             return $this->responseError('Link not found', Response::HTTP_FORBIDDEN);
         }
         $link->delete();
         return $this->responseSuccess(null, 'OK', Response::HTTP_OK);
     }
+
+    // /**
+    //  * Get links with statistics
+    //  */
+    // public function statistics(Request $request, $id)
+    // {
+    //     if (!$request->user()->tokenCan('read')) {
+    //         return $this->responseError('Forbidden', Response::HTTP_FORBIDDEN);
+    //     }
+    //     try {
+    //         $link = Link::with(['statistics'])->where('id', $id)->first();
+    //     } catch (Exception $th) {
+    //         return $this->responseError('Link not found', Response::HTTP_FORBIDDEN);
+    //     }
+    //     return $this->responseSuccess(new ResourcesLink($link), 'OK', Response::HTTP_OK);
+    // }
 }

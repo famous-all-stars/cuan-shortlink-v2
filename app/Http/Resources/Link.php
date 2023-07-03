@@ -17,6 +17,7 @@ class Link extends JsonResource
      */
     public function toArray($request)
     {
+        // $statistics = $this->whenLoaded('statistics', new StatisticCollection($this->statistics), []);
         return [
             'id' => $this->id,
             'label' => $this->label,
@@ -26,7 +27,7 @@ class Link extends JsonResource
             'description' => $this->description,
             'shortlink' => $this->shortlink,
             'clicks' => $this->statistics_count,
-            'statistics' => $this->whenLoaded('statistics', new StatisticCollection($this->statistics), [])
+            // 'statistics' => $statistics
         ];
     }
 }

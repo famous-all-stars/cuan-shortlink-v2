@@ -31,6 +31,7 @@ class LinkController extends Controller
             return $this->responseError('Forbidden', Response::HTTP_FORBIDDEN);
         }
         $links = ($search = $request->search) ? Link::search($search)->paginate() : Link::latest()->paginate();
+        $links->loadCount('statistics');
         return $this->responseSuccess(new LinkCollection($links), 'OK', Response::HTTP_OK);
     }
 

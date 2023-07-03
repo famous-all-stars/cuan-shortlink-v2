@@ -32,7 +32,7 @@ class Statistic extends JsonResource
                 ],
                 'browser'  => [
                     'name'    => $agent->browser(),
-                    'version' => $agent->version($agent->browser(),)
+                    'version' => $agent->version($agent->browser())
                 ],
                 'device'   => [
                     'name'    => $agent->device(),

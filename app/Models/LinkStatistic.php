@@ -51,6 +51,6 @@ class LinkStatistic extends Model
 
     public function link(): BelongsTo
     {
-        return $this->belongsTo( Link::class );
+        return $this->belongsTo(Link::class);
     }
 }

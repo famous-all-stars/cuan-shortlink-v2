@@ -42,46 +42,46 @@ class Link extends Model
 
     protected $guarded = [];
 
-    protected $appends = [ 'shortlink', 'is_public' ];
+    protected $appends = ['shortlink', 'is_public'];
 
     protected static function boot()
     {
         parent::boot();
 
-        static::creating( function ( self $link ) {
-            if ( $link->slug ) {
+        static::creating(function (self $link) {
+            if ($link->slug) {
                 return;
             }
 
             do {
                 $code     = Shortcode::get();
-                $existing = $link->whereSlug( $code )->first();
-                if ( ! $existing ) {
+                $existing = $link->whereSlug($code)->first();
+                if (!$existing) {
                     break;
                 }
-            } while ( true );
+            } while (true);
 
             $link->slug = $code;
-        } );
+        });
     }
 
     public function getShortlinkAttribute(): string
     {
-        return route( 'shortlink', [ 'link' => $this->slug, 'secret' => $this->secret ] );
+        return route('shortlink', ['link' => $this->slug, 'secret' => $this->secret]);
     }
 
     public function getIsPublicAttribute(): bool
     {
-        return (bool) ! $this->secret;
+        return (bool) !$this->secret;
     }
 
     public function toSearchableArray(): array
     {
-        return $this->only( [ 'id', 'label', 'slug', 'full_link' ] );
+        return $this->only(['id', 'label', 'slug', 'full_link']);
     }
 
     public function statistics(): HasMany
     {
-        return $this->hasMany( LinkStatistic::class );
+        return $this->hasMany(LinkStatistic::class);
     }
 }

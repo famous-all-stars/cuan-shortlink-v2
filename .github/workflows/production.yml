@@ -1,0 +1,42 @@
+name: Deployment Production
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deployment:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+      - name: Deploy to platform instance
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST_PROD }}
+          username: ${{ secrets.SSH_USERNAME_PROD }}
+          key: ${{ secrets.SSH_PRIVATE_KEY_PROD }}
+          port: ${{ secrets.SSH_PORT_PROD }}
+          script: |
+            cd /mnt/volume_ubuntu_1/d.alstr.in
+            sudo chown -R fas: /mnt/volume_ubuntu_1/d.alstr.in
+            git fetch
+            git checkout main
+            git pull origin main
+            php artisan optimize:clear
+            composer install
+            php artisan migrate --force
+            exit
+      - name: Change permission
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST_PROD }}
+          username: ${{ secrets.SSH_USERNAME_PROD }}
+          key: ${{ secrets.SSH_PRIVATE_KEY_PROD }}
+          port: ${{ secrets.SSH_PORT_PROD }}
+          script: |
+            cd /mnt/volume_ubuntu_1/d.alstr.in
+            sudo chmod -R 775 storage bootstrap/cache
+            sudo chown -R www-data: /mnt/volume_ubuntu_1/d.alstr.in
+            exit

@@ -13,6 +13,7 @@ use App\Models\LinkStatistic;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
@@ -47,6 +48,7 @@ class LinkController extends Controller
             return $this->responseError('Forbidden', Response::HTTP_FORBIDDEN);
         }
         $link = Link::create($request->validated());
+        Log::info('link created -> '.json_encode($link));
         return $this->responseSuccess(new ResourcesLink($link), 'OK', Response::HTTP_OK);
     }
 
@@ -67,6 +69,7 @@ class LinkController extends Controller
             return $this->responseError('Link not found', Response::HTTP_FORBIDDEN);
         }
         $link->loadCount('statistics');
+        Log::info('link detail fetched -> '.json_encode($link));
         return $this->responseSuccess(new ResourcesLink($link), 'OK', Response::HTTP_OK);
     }
 

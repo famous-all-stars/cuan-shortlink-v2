@@ -40,7 +40,7 @@ class LinkUpdateRequest extends FormRequest
 
         return [
             'label'       => ['sometimes', 'required', 'string', 'max:256'],
-            'full_link'   => ['sometimes', 'required', 'url', 'max:256'],
+            'full_link'   => ['sometimes', 'required', 'url'],
             'slug'        => [
                 'sometimes',
                 'alpha_dash',

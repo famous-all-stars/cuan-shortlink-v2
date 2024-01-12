@@ -34,7 +34,7 @@ class LinkStoreRequest extends FormRequest
     {
         return [
             'label'       => ['required', 'string', 'max:256'],
-            'full_link'   => ['required', 'url', 'max:550'],
+            'full_link'   => ['required', 'url'],
             'slug'        => ['nullable', 'alpha_dash', 'unique:links'],
             'description' => ['nullable', 'string'],
             'private'     => ['sometimes', 'boolean'],
